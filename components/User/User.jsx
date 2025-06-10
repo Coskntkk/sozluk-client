@@ -6,12 +6,12 @@ import Pagination from "../shared/Pagination";
 import Image from "next/image";
 import moment from "moment"
 import EntryWithTitle from "../shared/EntryWithTitle";
+import Follow from "../shared/Follow";
 
 const User = ({ username }) => {
-    const currentUser = useSelector((state) => state.auth.user);
-
+    const { user } = useSelector((state) => state.auth);
     const [usernamex, setUsernamex] = useState("");
-    const [user, setUser] = useState({});
+    const [userx, setUserx] = useState({});
     const [entries, setEntries] = useState([]);
     const [isFollowing, setIsFollowing] = useState(false);
     const [followerCount, setFollowerCount] = useState(0);
@@ -27,11 +27,11 @@ const User = ({ username }) => {
         message: ''
     });
 
-    const getData = () => {
+    const getUser = () => {
         UserService.getUser(username)
             .then((resp) => {
                 const userData = resp.data.data;
-                setUser(userData);
+                setUserx(userData);
                 setIsFollowing(userData.isFollowing);
                 setFollowerCount(userData.followerCount);
                 setFollowingCount(userData.followingCount);
@@ -86,46 +86,45 @@ const User = ({ username }) => {
         }
     }
 
+    const getData = async () => {
+        getUser();
+        getEntries(usernamex, 10, 1)
+    }
+
     useEffect(() => {
         setUsernamex(username)
     }, [username]);
 
     useEffect(() => {
         if (usernamex) {
-            getData();
-            getEntries(usernamex, 10, 1)
+            getData()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usernamex]);
-
-    const isCurrentUser = currentUser?.username === usernamex;
 
     return (
         <ErrorBoundary error={error} loading={loading}>
             <div className="p-6">
                 <div className="flex items-center space-x-4 mb-6">
-                    {user?.image_url && <Image
-                        src={user?.image_url}
-                        alt={user?.username}
+                    {userx?.image_url && <Image
+                        src={userx?.image_url}
+                        alt={userx?.username}
                         width={100}
                         height={100}
                         className="w-20 h-20 rounded-full border shadow"
                     />}
                     <div>
-                        <h2 className="text-2xl font-bold text-sky-800">👤 {user?.username}</h2>
-                        <p className="text-gray-500 text-sm">Katıldı: {moment(user?.createdAt).format('DD.MM.YYYY hh:mm')}</p>
+                        <h2 className="text-2xl font-bold text-sky-800">👤 {userx?.username}</h2>
+                        <p className="text-gray-500 text-sm">Joined: {moment(userx?.createdAt).format('DD.MM.YYYY hh:mm')}</p>
                         <div className="flex items-center gap-4 mt-2">
-                            <span className="text-sm text-gray-600">Takipçi: {followerCount}</span>
-                            <span className="text-sm text-gray-600">Takip Edilen: {followingCount}</span>
-                            {!isCurrentUser && (
-                                <button
-                                    onClick={handleFollowToggle}
-                                    className={`text-sm px-3 py-1 rounded ${
-                                        isFollowing ? "bg-gray-300 text-black" : "bg-sky-600 text-white"
-                                    }`}
-                                >
-                                    {isFollowing ? "Takibi Bırak" : "Takip Et"}
-                                </button>
-                            )}
+                            <span className="text-sm text-gray-600">Follower: {followerCount}</span>
+                            <span className="text-sm text-gray-600">Following: {followingCount}</span>
+                            <Follow
+                                username={userx.username}
+                                isFollowing={userx.isFollowing === "1"}
+                                isOwn={userx.id === user.id}
+                                onUse={getData}
+                            />
                         </div>
                     </div>
                 </div>

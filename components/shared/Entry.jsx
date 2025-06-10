@@ -15,9 +15,12 @@ const Entry = ({ entry }) => {
             </p>
             <div className="flex justify-between items-center text-sm">
                 <p className="text-end">
-                    <Link href={`/u/${entry?.user.id}`} className='text-sky-800 hover:underline'>
+                    <Link href={`/u/${entry?.user.username}`} className='text-sky-800 hover:underline'>
                         {entry?.user.username}
-                    </Link> - {moment(entry.createdAt).format('DD.MM.YYYY hh:mm')}
+                    </Link>{" - "}
+                    <Link href={`/e/${entry.id}`} className="text-sky-900 text-s text-md mb-6 cursor-pointer hover:underline">
+                        {moment(entry.createdAt).format('DD.MM.YYYY hh:mm')}
+                    </Link>
                 </p>
                 <div className="flex items-center gap-4">
                     <EntryVote

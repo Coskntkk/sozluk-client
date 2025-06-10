@@ -43,6 +43,7 @@ const Notifications = () => {
                     }
                 })
                 setNotifications(newNotifs)
+                router.push(link)
             })
             .catch((err) => {
                 setError({
@@ -51,7 +52,7 @@ const Notifications = () => {
                 });
             })
             .finally(() => {
-                router.push(link)
+                setLoading(false)
             })
     }
 
@@ -63,7 +64,7 @@ const Notifications = () => {
     if (!notifications || notifications.length === 0) {
         return (
             <div className="bg-white p-4 shadow-md rounded-lg w-full max-w-sm mt-6 text-gray-500 text-sm">
-                Bildirimin yok.
+                No notifications.
             </div>
         )
     }
@@ -71,7 +72,7 @@ const Notifications = () => {
     return (
         <ErrorBoundary error={error} loading={loading}>
             <div className="bg-white p-4 shadow-md rounded-lg w-full max-w-sm mt-6">
-                <h3 className="text-md font-bold text-sky-700 mb-2">🔔 Bildirimler</h3>
+                <h3 className="text-md font-bold text-sky-700 mb-2">🔔 Notifications</h3>
                 <ul className="space-y-3 text-sm">
                     {notifications.map((notif, index) => (
                         <li key={index} className={`border-b pb-2 ${!notif.read ? "font-semibold" : "text-gray-600"}`}>

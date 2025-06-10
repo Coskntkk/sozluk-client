@@ -21,7 +21,7 @@ const EntryActions = ({ isOwner, entry }) => {
                     onClick={() => { handleDelete() }}
                     className="text-red-900 text-xs hover:underline cursor-pointer"
                 >
-                    sil
+                    delete
                 </span >
             )
             : (
@@ -29,7 +29,7 @@ const EntryActions = ({ isOwner, entry }) => {
                     onClick={() => { handleReport() }}
                     className="text-red-900 text-xs hover:underline cursor-pointer"
                 >
-                    şikayet et
+                    report
                 </span>
             )
     )

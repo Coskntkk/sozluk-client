@@ -46,14 +46,14 @@ const ProfileSidebar = () => {
         />
         <div>
           <p className="text-lg font-bold text-sky-700">{user.username}</p>
-          <p className="text-sm text-gray-500">Katıldı: {moment(user.createdAt).format("DD.MM.YYYY")}</p>
+          <p className="text-sm text-gray-500">Joined: {moment(user.createdAt).format("DD.MM.YYYY")}</p>
         </div>
       </div>
 
       {data && <div className="text-sm text-gray-700 space-y-1 mb-4">
-        <p>✍️ Entry sayısı: <strong>{data.entryCount}</strong></p>
-        <p>👥 Takipçi: <strong>{data.followerCount}</strong></p>
-        <p>➡️ Takip edilen: <strong>{data.followingCount}</strong></p>
+        <p>✍️ Entry count: <strong>{data.entryCount}</strong></p>
+        <p>👥 Follower: <strong>{data.followerCount}</strong></p>
+        <p>➡️ Following: <strong>{data.followingCount}</strong></p>
       </div>}
 
       <Notifications />

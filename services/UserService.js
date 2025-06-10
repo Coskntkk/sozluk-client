@@ -13,11 +13,13 @@ class UserServiceClass {
     };
 
     async followUser(username) {
-        axios.post(`${apiUrl}/users/${username}/follow`)
+        let res = await api.get(`/users/${username}/follow`)
+        return res
     };
     
     async unfollowUser(username) {
-        axios.post(`${apiUrl}/users/${username}/unfollow`)
+        let res = await api.delete(`/users/${username}/unfollow`)
+        return res
     };
 };
 
