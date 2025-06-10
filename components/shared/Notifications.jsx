@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import NotificationService from "@/services/NotificationService"
 import ErrorBoundary from "@/layout/ErrorBoundary"
 import { useRouter } from "next/router"
+import Pagination from "./Pagination"
 
 const Notifications = () => {
     const router = useRouter()
@@ -19,10 +20,21 @@ const Notifications = () => {
         message: ''
     });
 
-    const getData = () => {
-        NotificationService.getNotifications()
+    const getData = (limit, page) => {
+        NotificationService.getNotifications(
+            {
+                page: page,
+                limit: limit
+            }
+        )
             .then((resp) => {
-                setNotifications(resp.data.data.items)
+                const data = resp.data.data
+                setNotifications(data.items)
+                setPagination({
+                    page: data.page,
+                    totalPages: data.total_pages,
+                    limit: data.limit
+                })
             })
             .catch((err) => {
                 setError({
@@ -33,31 +45,41 @@ const Notifications = () => {
             .finally(() => setLoading(false))
     }
 
-    const handleClick = async (id, link) => {
-        NotificationService.readNotification(id)
-            .then((resp) => {
-                const newNotifs = notifications.map(notif => {
-                    return {
-                        ...notif,
-                        read: notif.id === id ? true : notif.read
-                    }
+
+    const onPaginationChange = (newPage) => {
+        setPagination({
+            ...pagination,
+            page: newPage
+        })
+        getData(pagination.limit, newPage)
+    }
+
+    const handleClick = async (notif, link) => {
+        if (!notif.read)
+            NotificationService.readNotification(notif.id)
+                .then((resp) => {
+                    const newNotifs = notifications.map(n => {
+                        return {
+                            ...n,
+                            read: notif.id === n.id ? true : n.read
+                        }
+                    })
+                    setNotifications(newNotifs)
                 })
-                setNotifications(newNotifs)
-                router.push(link)
-            })
-            .catch((err) => {
-                setError({
-                    isError: true,
-                    message: err.response?.data?.message || "Something went wrong."
-                });
-            })
-            .finally(() => {
-                setLoading(false)
-            })
+                .catch((err) => {
+                    setError({
+                        isError: true,
+                        message: err.response?.data?.message || "Something went wrong."
+                    });
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+        router.push(link)
     }
 
     useEffect(() => {
-        getData()
+        getData(pagination.limit, pagination.page)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -76,13 +98,19 @@ const Notifications = () => {
                 <ul className="space-y-3 text-sm">
                     {notifications.map((notif, index) => (
                         <li key={index} className={`border-b pb-2 ${!notif.read ? "font-semibold" : "text-gray-600"}`}>
-                            <span onClick={() => handleClick(notif.id, notif.link)} href={notif.link} className="hover:underline cursor-pointer">
+                            <span onClick={() => handleClick(notif, notif.link)} href={notif.link} className="hover:underline cursor-pointer">
                                 {notif.message}
                             </span>
                             <p className="text-xs text-gray-400">{moment(notif.createdAt).fromNow()}</p>
                         </li>
                     ))}
                 </ul>
+                <Pagination
+                    currentPage={pagination.page}
+                    totalPages={pagination.totalPages}
+                    onPageChange={onPaginationChange}
+                    size={"small"}
+                />
             </div>
         </ErrorBoundary>
     )

@@ -1,8 +1,9 @@
 import api from "./api"
 
 class NotificationServiceClass {
-    async getNotifications() {
-        let res = await api.get(`/notification`);
+    async getNotifications(query) {
+        let queryStr = new URLSearchParams(query)
+        let res = await api.get(`/notification?${queryStr}`);
         return res
     };
 

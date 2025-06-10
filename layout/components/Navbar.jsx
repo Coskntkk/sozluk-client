@@ -1,9 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/redux/auth/AuthSlice';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+    const handleLogout = async () => {
+        dispatch(logout({ navigate: router }))
+    }
 
     return (
         <header className="bg-sky-700 text-white p-4">
@@ -15,13 +23,19 @@ const Navbar = () => {
                     ? (
                         <div className="flex space-x-4">
                             <nav>
-                                <ul className="flex space-x-4">
+                                <ul className="flex space-x-4 cursor-pointer hover:underline">
                                     <li><Link href={`/u/${user.username}`}>🫵 {user.username}</Link></li>
                                 </ul>
                             </nav>
                             <nav>
-                                <ul className="flex space-x-4">
-                                    <li><Link href="/auth/login">🚪 Logout</Link></li>
+                                <ul className="flex space-x-4 cursor-pointer hover:underline">
+                                    <li>
+                                        <span
+                                            onClick={() => handleLogout()}
+                                        >
+                                            🚪 Logout
+                                        </span>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -29,8 +43,8 @@ const Navbar = () => {
                     : (
                         <nav>
                             <ul className="flex space-x-4">
-                                <li><Link href="/auth/login">🚪 Login</Link></li>
-                                <li><Link href="/auth/register">✍️ Register</Link></li>
+                                <li><Link href="/auth/login" className='cursor-pointer hover:underline'>🚪 Login</Link></li>
+                                <li><Link href="/auth/register" className='cursor-pointer hover:underline'>✍️ Register</Link></li>
                             </ul>
                         </nav>
                     )

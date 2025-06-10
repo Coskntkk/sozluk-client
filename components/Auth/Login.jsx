@@ -22,17 +22,13 @@ const LoginPage = () => {
         }),
         onSubmit: values => {
             dispatch(login(values))
-                .finally((asd) => {
-                    console.log("???");
-                    console.log(asd);
-                    if (isAuthenticated) router.push('/')
-                })
+                .finally(() => { router.push('/') });
         },
     });
 
     useEffect(() => {
         if (isAuthenticated) router.push('/')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

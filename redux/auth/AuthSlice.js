@@ -75,20 +75,21 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (data, thunkAPI) => {
     const { navigate } = data;
-
+    const access_token = localStorage.getItem("token");
+    // const refresh_token = localStorage.getItem("reftoken");
     await axios
-      .post(`${apiUrl}/auth/logout`, {
-        token: localStorage.getItem("token"),
-      })
+      .get(`${apiUrl}/auth/logout`,
+        { headers: { ["x-access-token"]: access_token } }
+      )
       .then((res) => {
         if (res.status === 200) {
           localStorage.clear();
-          navigate("/login");
-          successNote(res.data.message);
+          navigate.push("/auth/login");
+          // successNote(res.data.message);
         }
       })
       .catch((err) => {
-        navigate("/login");
+        navigate.push("/auth/login");
         localStorage.clear();
         return thunkAPI.rejectWithValue("something went wrong");
       });
@@ -126,6 +127,11 @@ const authSlice = createSlice({
       store.loading = false;
     });
     builder.addCase(checkLogin.rejected, (store, { payload }) => {
+      store.user = {};
+      store.isAuthenticated = false;
+      store.loading = false;
+    });
+    builder.addCase(logout.fulfilled, (store, { payload }) => {
       store.user = {};
       store.isAuthenticated = false;
       store.loading = false;

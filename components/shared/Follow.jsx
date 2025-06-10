@@ -7,17 +7,7 @@ const Follow = ({
     isOwn,
     onUse
 }) => {
-
-    // const handleFollow = async (params) => {
-
-    // }
-
-    // const handleUnfollow = async (params) => {
-
-    // }
-
     const handleFollowToggle = async () => {
-        console.log("??*");
         try {
             if (isFollowing) {
                 await UserService.unfollowUser(username);
@@ -26,7 +16,8 @@ const Follow = ({
             }
             onUse()
         } catch (err) {
-            console.log("Follow toggle failed:", err);
+            // TODO: Fix here
+            console.log("Operation failed:", err);
         }
     }
 

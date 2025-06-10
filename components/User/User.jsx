@@ -70,22 +70,6 @@ const User = ({ username }) => {
         getEntries(username, pagination.limit, newPage);
     }
 
-    const handleFollowToggle = async () => {
-        try {
-            if (isFollowing) {
-                await UserService.unfollowUser(username);
-                setIsFollowing(false);
-                setFollowerCount(followerCount - 1);
-            } else {
-                await UserService.followUser(username);
-                setIsFollowing(true);
-                setFollowerCount(followerCount + 1);
-            }
-        } catch (err) {
-            console.log("Follow toggle failed:", err);
-        }
-    }
-
     const getData = async () => {
         getUser();
         getEntries(usernamex, 10, 1)
