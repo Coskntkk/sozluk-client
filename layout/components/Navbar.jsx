@@ -3,8 +3,11 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/redux/auth/AuthSlice';
 import { useRouter } from 'next/router';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+    const { t } = useTranslation('shared')
     const dispatch = useDispatch();
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -17,11 +20,12 @@ const Navbar = () => {
         <header className="bg-sky-700 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <Link href={"/"}>
-                    <h1 className="text-2xl font-bold">📖 Sözlük</h1>
+                    <h1 className="text-2xl font-bold">📖 Sozluk</h1>
                 </Link>
-                {isAuthenticated
-                    ? (
-                        <div className="flex space-x-4">
+                <div className="flex space-x-4 items-center">
+                    <LanguageSwitcher />
+                    {isAuthenticated
+                        ? (<>
                             <nav>
                                 <ul className="flex space-x-4 cursor-pointer hover:underline">
                                     <li><Link href={`/u/${user.username}`}>🫵 {user.username}</Link></li>
@@ -33,22 +37,37 @@ const Navbar = () => {
                                         <span
                                             onClick={() => handleLogout()}
                                         >
-                                            🚪 Logout
+                                            🚪 {t('logout')}
                                         </span>
                                     </li>
                                 </ul>
                             </nav>
-                        </div>
-                    )
-                    : (
-                        <nav>
-                            <ul className="flex space-x-4">
-                                <li><Link href="/auth/login" className='cursor-pointer hover:underline'>🚪 Login</Link></li>
-                                <li><Link href="/auth/register" className='cursor-pointer hover:underline'>✍️ Register</Link></li>
-                            </ul>
-                        </nav>
-                    )
-                }
+                        </>
+                        )
+                        : (
+                            <nav>
+                                <ul className="flex space-x-4">
+                                    <li>
+                                        <Link
+                                            href="/auth/login"
+                                            className='cursor-pointer hover:underline'
+                                        >
+                                            🚪 {t('login')}
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href="/auth/register"
+                                            className='cursor-pointer hover:underline'
+                                        >
+                                            ✍️ {t('register')}
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        )
+                    }
+                </div>
             </div>
         </header>
     )

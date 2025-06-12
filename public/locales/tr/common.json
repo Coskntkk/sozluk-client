@@ -1,0 +1,7 @@
+{
+  "shared": {
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "shared": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  }
+}
