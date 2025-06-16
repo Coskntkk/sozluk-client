@@ -37,7 +37,7 @@ const LanguageSwitcher = () => {
     }, [])
 
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left z-50">
             <button
                 onClick={() => setOpen(!open)}
                 className="flex items-center space-x-2 px-1 py-.5 border border rounded shadow-sm hover:bg-gray-100"

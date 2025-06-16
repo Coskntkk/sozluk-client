@@ -7,7 +7,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
-    const { t } = useTranslation('shared')
+    const { t } = useTranslation('navbar')
     const dispatch = useDispatch();
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state) => state.auth);

@@ -1,7 +1,65 @@
 {
-  "shared": {
+  "navbar": {
     "login": "Login",
     "register": "Register",
     "logout": "Logout"
+  },
+  "leftframe": {
+    "recent": "Recent"
+  },
+  "rightframe": {
+    "entry_count": "Entry Count",
+    "follower": "Follower",
+    "following": "Following",
+    "joined": "Joined"
+  },
+  "login": {
+    "login": "Login",
+    "dont_have_account": "Don’t have an account yet? -> ",
+    "your_username": "Your Username",
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "register": "Register"
+  },
+  "register": {
+    "register": "Register",
+    "do_have_account": "Do you have an account? -> ",
+    "your_username": "Your Username",
+    "your_email": "Your Email",
+    "password": "Password",
+    "login": "Login"
+  },
+  "entry_page": {
+    "go_to_title": "Go to title"
+  },
+  "home_page": {
+    "see_all_entries": "See all entries"
+  },
+  "user": {
+    "follower": "Follower",
+    "following": "Following",
+    "joined": "Joined"
+  },
+  "follow": {
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
+  "entry_actions": {
+    "delete": "delete",
+    "report": "report"
+  },
+  "error": {
+    "something_went_wrong": "Something went wrong :("
+  },
+  "notifications": {
+    "notifications": "Notifications",
+    "no_notifications": "No notifications.",
+    "entry_upvoted": "Your entry is upvoted",
+    "entry_downvoted": "Your entry is downvoted"
+  },
+  "pagination": {
+    "page": "Page",
+    "next": "Next",
+    "prev": "Prev"
   }
 }

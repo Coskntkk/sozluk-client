@@ -1,12 +1,17 @@
 import Link from "next/link"
 import moment from "moment"
+import "moment/locale/tr"
+import "moment/locale/fr"
 import { useEffect, useState } from "react"
 import NotificationService from "@/services/NotificationService"
 import ErrorBoundary from "@/layout/ErrorBoundary"
 import { useRouter } from "next/router"
 import Pagination from "./Pagination"
+import { useTranslation } from "react-i18next"
 
 const Notifications = () => {
+    const { t, i18n } = useTranslation('notifications');
+    moment.locale(i18n.language)
     const router = useRouter()
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true);
@@ -44,7 +49,6 @@ const Notifications = () => {
             })
             .finally(() => setLoading(false))
     }
-
 
     const onPaginationChange = (newPage) => {
         setPagination({
@@ -86,7 +90,7 @@ const Notifications = () => {
     if (!notifications || notifications.length === 0) {
         return (
             <div className="bg-white p-4 shadow-md rounded-lg w-full max-w-sm mt-6 text-gray-500 text-sm">
-                No notifications.
+                {t("no_notifications")}
             </div>
         )
     }
@@ -94,14 +98,18 @@ const Notifications = () => {
     return (
         <ErrorBoundary error={error} loading={loading}>
             <div className="bg-white p-4 shadow-md rounded-lg w-full max-w-sm mt-6">
-                <h3 className="text-md font-bold text-sky-700 mb-2">🔔 Notifications</h3>
+                <h3 className="text-md font-bold text-sky-700 mb-2">
+                    🔔 {t("notifications")}
+                </h3>
                 <ul className="space-y-3 text-sm">
                     {notifications.map((notif, index) => (
                         <li key={index} className={`border-b pb-2 ${!notif.read ? "font-semibold" : "text-gray-600"}`}>
                             <span onClick={() => handleClick(notif, notif.link)} href={notif.link} className="hover:underline cursor-pointer">
-                                {notif.message}
+                                {t(notif.message)}
                             </span>
-                            <p className="text-xs text-gray-400">{moment(notif.createdAt).fromNow()}</p>
+                            <p className="text-xs text-gray-400">
+                                {moment(notif.createdAt).fromNow().toLocaleString("fr")}
+                            </p>
                         </li>
                     ))}
                 </ul>

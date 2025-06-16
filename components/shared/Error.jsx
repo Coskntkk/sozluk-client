@@ -1,9 +1,10 @@
 import React from 'react'
 
 const Error = ({ error }) => {
+    const { t } = useTranslation('error');
     return (
         <div>
-            {error.message || 'Something went wrong :('}
+            {error.message || t('something_went_wrong')}
         </div>
     )
 }

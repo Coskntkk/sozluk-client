@@ -7,8 +7,10 @@ import Image from "next/image";
 import moment from "moment"
 import EntryWithTitle from "../shared/EntryWithTitle";
 import Follow from "../shared/Follow";
+import { useTranslation } from "react-i18next";
 
 const User = ({ username }) => {
+    const { t } = useTranslation('user');
     const { user } = useSelector((state) => state.auth);
     const [usernamex, setUsernamex] = useState("");
     const [userx, setUserx] = useState({});
@@ -99,10 +101,16 @@ const User = ({ username }) => {
                     />}
                     <div>
                         <h2 className="text-2xl font-bold text-sky-800">👤 {userx?.username}</h2>
-                        <p className="text-gray-500 text-sm">Joined: {moment(userx?.createdAt).format('DD.MM.YYYY hh:mm')}</p>
+                        <p className="text-gray-500 text-sm">
+                            {t("joined")}: {moment(userx?.createdAt).format('DD.MM.YYYY hh:mm')}
+                        </p>
                         <div className="flex items-center gap-4 mt-2">
-                            <span className="text-sm text-gray-600">Follower: {followerCount}</span>
-                            <span className="text-sm text-gray-600">Following: {followingCount}</span>
+                            <span className="text-sm text-gray-600">
+                                {t("follower")}: {followerCount}
+                            </span>
+                            <span className="text-sm text-gray-600">
+                                {t("following")}: {followingCount}
+                            </span>
                             <Follow
                                 username={userx.username}
                                 isFollowing={userx.isFollowing === "1"}

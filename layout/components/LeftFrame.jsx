@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 import HomeService from '@/services/HomeService'
+import { useTranslation } from 'react-i18next'
 
 const LeftFrame = () => {
+  const { t } = useTranslation('leftframe')
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState({
@@ -33,7 +35,7 @@ const LeftFrame = () => {
   return (
     <ErrorBoundary error={error} loading={loading}>
       <aside className="sidebar">
-        <h3 className="bg-sky-500 text-white p-1 m-0 text-center text-sm">Recent</h3>
+        <h3 className="bg-sky-500 text-white p-1 m-0 text-center text-sm">{t("recent")}</h3>
         <ul className="list-none p-0 m-0 bg-white rounded-b-lg shadow-md mb-2">
           {!loading && data.map(item => {
             return (

@@ -4,8 +4,10 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { register } from '@/redux/auth/AuthSlice';
+import { useTranslation } from 'react-i18next';
 
 const RegisterPage = () => {
+    const { t } = useTranslation('register');
     const dispatch = useDispatch();
     // const { login } = useSelector((state) => state.auth);
 
@@ -30,11 +32,13 @@ const RegisterPage = () => {
             <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-black-900 md:text-2xl">
-                        Register
+                        {t("register")}
                     </h1>
                     <form className="space-y-4 md:space-y-6" onSubmit={formik.handleSubmit}>
                         <div>
-                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Your username</label>
+                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">
+                                {t("your_username")}
+                            </label>
                             <input
                                 id="username"
                                 type="username"
@@ -46,7 +50,9 @@ const RegisterPage = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                                {t("your_email")}
+                            </label>
                             <input
                                 id="email"
                                 type="email"
@@ -58,7 +64,9 @@ const RegisterPage = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
+                                {t("password")}
+                            </label>
                             <input
                                 id="password"
                                 name="password"
@@ -70,12 +78,14 @@ const RegisterPage = () => {
                                 required=""
                             />
                         </div>
-                        <div className="flex items-center justify-between">
-                            <a href="#" className="text-sm font-medium text-primary-600 hover:underline ">Forgot password?</a>
-                        </div>
-                        <button type="submit" className="w-full text-white bg-sky-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                        <button type="submit" className="w-full text-white bg-sky-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                            {t("register")}
+                        </button>
                         <p className="text-sm font-dark text-gray-500">
-                            Don’t have an account yet? <Link href="/auth/register" className="font-medium text-primary-600 hover:underline">Sign Up</Link>
+                            {t("do_have_account")}
+                            <Link href="/auth/register" className="font-medium text-primary-600 hover:underline">
+                                {t("login")}
+                            </Link>
                         </p>
                     </form>
                 </div>

@@ -1,7 +1,65 @@
 {
-  "shared": {
+  "navbar": {
     "login": "Connexion",
     "register": "Inscription",
     "logout": "Déconnexion"
+  },
+  "leftframe": {
+    "recent": "Récent"
+  },
+  "rightframe": {
+    "entry_count": "Nombre d’entrées",
+    "follower": "Abonné",
+    "following": "Abonnements",
+    "joined": "Inscription"
+  },
+  "login": {
+    "login": "Connexion",
+    "dont_have_account": "Pas encore de compte ? -> ",
+    "your_username": "Votre nom d'utilisateur",
+    "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "register": "Inscription"
+  },
+  "register": {
+    "register": "Inscription",
+    "do_have_account": "Vous avez déjà un compte ? -> ",
+    "your_username": "Votre nom d'utilisateur",
+    "your_email": "Votre adresse e-mail",
+    "password": "Mot de passe",
+    "login": "Connexion"
+  },
+  "entry_page": {
+    "go_to_title": "Aller au titre"
+  },
+  "home_page": {
+    "see_all_entries": "Voir toutes les entrées"
+  },
+  "user": {
+    "follower": "Abonné",
+    "following": "Abonnements",
+    "joined": "Inscription"
+  },
+  "follow": {
+    "follow": "Suivre",
+    "unfollow": "Ne plus suivre"
+  },
+  "entry_actions": {
+    "delete": "supprimer",
+    "report": "signaler"
+  },
+  "error": {
+    "something_went_wrong": "Une erreur s'est produite :("
+  },
+  "notifications": {
+    "notifications": "Notifications",
+    "no_notifications": "Aucune notification.",
+    "entry_upvoted": "Votre entrée a été aimée",
+    "entry_downvoted": "Votre entrée a été désapprouvée"
+  },
+  "pagination": {
+    "page": "Page",
+    "next": "Suivant",
+    "prev": "Précédent"
   }
 }

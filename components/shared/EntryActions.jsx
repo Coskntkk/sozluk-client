@@ -1,6 +1,8 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 const EntryActions = ({ isOwner, entry }) => {
+    const { t } = useTranslation('entry_actions');
 
     const handleDelete = () => {
         if (confirm("Bu entry'yi silmek istiyor musun?")) {
@@ -21,7 +23,7 @@ const EntryActions = ({ isOwner, entry }) => {
                     onClick={() => { handleDelete() }}
                     className="text-red-900 text-xs hover:underline cursor-pointer"
                 >
-                    delete
+                    {t("delete")}
                 </span >
             )
             : (
@@ -29,7 +31,7 @@ const EntryActions = ({ isOwner, entry }) => {
                     onClick={() => { handleReport() }}
                     className="text-red-900 text-xs hover:underline cursor-pointer"
                 >
-                    report
+                    {t("report")}
                 </span>
             )
     )

@@ -4,8 +4,10 @@ import TitleHeader from "@/components/shared/TitleHeader"
 import EntryList from "@/components/shared/EntryList"
 import ErrorBoundary from "@/layout/ErrorBoundary"
 import HomeService from "@/services/HomeService"
+import { useTranslation } from "react-i18next"
 
 const HomePage = () => {
+    const { t } = useTranslation('home_page');
     const [title, setTitle] = useState({})
     const [entries, setEntries] = useState([])
     const [loading, setLoading] = useState(true)
@@ -38,7 +40,7 @@ const HomePage = () => {
             <TitleHeader title={title} entries={entries} />
             <EntryList entries={entries} />
             <Link href={`/t/${title.slug}`}>
-                <p className="text-end text-md fs-6 underline">See all entries</p>
+                <p className="text-end text-md fs-6 underline">{t("see_all_entries")}</p>
             </Link>
         </ErrorBoundary>
     )

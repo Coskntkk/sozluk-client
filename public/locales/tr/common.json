@@ -1,7 +1,67 @@
 {
-  "shared": {
+  "navbar": {
     "login": "Giriş Yap",
     "register": "Kayıt Ol",
-    "logout": "Çıkış Yap"
+    "logout": "Çıkış Yap",
+    "recent": "Son"
+  },
+  "leftframe": {
+    "recent": "Güncel"
+  },
+  "rightframe": {
+    "entry_count": "Gönderi Sayısı",
+    "follower": "Takipçi",
+    "following": "Takip",
+    "joined": "Katılış"
+  },
+  "login": {
+    "login": "Giriş Yap",
+    "dont_have_account": "Henüz hesabın yok mu? -> ",
+    "your_username": "Kullanıcı Adın",
+    "password": "Şifren",
+    "forgot_password": "Şifreni mi unuttun?",
+    "register": "Kayıt Ol"
+  },
+  "register": {
+    "register": "Giriş Yap",
+    "do_have_account": "Hesabın var mı? -> ",
+    "your_username": "Kullanıcı Adın",
+    "your_email": "Email Adresin",
+    "password": "Şifren",
+    "login": "Giriş Yap"
+  },
+  "entry_page": {
+    "go_to_title": "Başlığa git"
+  },
+  "home_page": {
+    "see_all_entries": "Tüm gönderileri gör"
+  },
+  "user": {
+    "entry_count": "Gönderi Sayııs",
+    "follower": "Takipçi",
+    "following": "Takip",
+    "joined": "Katılış"
+  },
+  "follow": {
+    "follow": "Takip Et",
+    "unfollow": "Takipten Çık"
+  },
+  "entry_actions": {
+    "delete": "sil",
+    "report": "şikayet et"
+  },
+  "error": {
+    "something_went_wrong": "Bir şeyler ters gitti :("
+  },
+  "notifications": {
+    "notifications": "Bildirimler",
+    "no_notifications": "Bildirim yok.",
+    "entry_upvoted": "Gönderiniz pozitif oy aldı",
+    "entry_downvoted": "Gönderiniz negatif oy aldı"
+  },
+  "pagination": {
+    "page": "Sayfa",
+    "next": "İleri",
+    "prev": "Geri"
   }
 }

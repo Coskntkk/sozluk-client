@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '@/redux/auth/AuthSlice';
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
+    const { t } = useTranslation('login');
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector((state) => state.auth);
     const router = useRouter()
@@ -36,11 +38,13 @@ const LoginPage = () => {
             <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-black-900 md:text-2xl">
-                        Log In
+                        {t("login")}
                     </h1>
                     <form className="space-y-4 md:space-y-6" onSubmit={formik.handleSubmit}>
                         <div>
-                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Your username</label>
+                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">
+                                {t("your_username")}
+                            </label>
                             <input
                                 id="username"
                                 type="username"
@@ -52,7 +56,9 @@ const LoginPage = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">
+                                {t("password")}
+                            </label>
                             <input
                                 id="password"
                                 name="password"
@@ -65,11 +71,18 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className="flex items-center justify-between">
-                            <a href="#" className="text-sm font-medium text-primary-600 hover:underline ">Forgot password?</a>
+                            <a href="#" className="text-sm font-medium text-primary-600 hover:underline ">
+                                {t("forgot_password")}
+                            </a>
                         </div>
-                        <button type="submit" className="w-full text-white bg-sky-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                        <button type="submit" className="w-full text-white bg-sky-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                            {t("login")}
+                        </button>
                         <p className="text-sm font-dark text-gray-500">
-                            Don’t have an account yet? <Link href="/auth/register" className="font-medium text-primary-600 hover:underline">Sign Up</Link>
+                            {t("dont_have_account")}
+                            <Link href="/auth/register" className="font-medium text-primary-600 hover:underline">
+                                {t("register")}
+                            </Link>
                         </p>
                     </form>
                 </div>
