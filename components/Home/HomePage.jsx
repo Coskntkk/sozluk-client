@@ -5,6 +5,7 @@ import EntryList from "@/components/shared/EntryList"
 import ErrorBoundary from "@/layout/ErrorBoundary"
 import HomeService from "@/services/HomeService"
 import { useTranslation } from "react-i18next"
+import CreateEntry from "../shared/CreateEntry"
 
 const HomePage = () => {
     const { t } = useTranslation('home_page');
@@ -42,6 +43,7 @@ const HomePage = () => {
             <Link href={`/t/${title.slug}`}>
                 <p className="text-end text-md fs-6 underline">{t("see_all_entries")}</p>
             </Link>
+            <CreateEntry titleId={title.id} onEntryCreated={getData} />
         </ErrorBoundary>
     )
 };

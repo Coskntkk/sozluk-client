@@ -61,5 +61,16 @@
     "page": "Page",
     "next": "Next",
     "prev": "Prev"
+  },
+  "post_entry": {
+    "new_entry": "New Entry",
+    "new_title": "New Title",
+    "enter_message": "Please type a message.",
+    "message_limit": "Message cannot exceed 280 characters.",
+    "post_entry": "Post",
+    "posting": "Posting...",
+    "login_alert": "Login or Register to post an entry.",
+    "login": "Login",
+    "register": "Register"
   }
 }

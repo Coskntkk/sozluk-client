@@ -5,6 +5,7 @@ import { logout } from '@/redux/auth/AuthSlice';
 import { useRouter } from 'next/router';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
     const { t } = useTranslation('navbar')
@@ -18,11 +19,16 @@ const Navbar = () => {
 
     return (
         <header className="bg-sky-700 text-white p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <Link href={"/"}>
-                    <h1 className="text-2xl font-bold">📖 Sozluk</h1>
-                </Link>
-                <div className="flex space-x-4 items-center">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+                <div className="flex justify-center md:justify-start">
+                    <Link href={'/'}>
+                        <h1 className="text-2xl font-bold">📖 Sozluk</h1>
+                    </Link>
+                </div>
+                <div className="flex justify-center">
+                    <SearchBar />
+                </div>
+                <div className="flex justify-center md:justify-end items-center space-x-4">
                     <LanguageSwitcher />
                     {isAuthenticated
                         ? (<>

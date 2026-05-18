@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { register } from '@/redux/auth/AuthSlice';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 
 const RegisterPage = () => {
     const { t } = useTranslation('register');
     const dispatch = useDispatch();
+    const router = useRouter();
     // const { login } = useSelector((state) => state.auth);
 
     const formik = useFormik({
@@ -24,6 +26,8 @@ const RegisterPage = () => {
         }),
         onSubmit: values => {
             dispatch(register(values))
+                .unwrap()
+                .then(() => router.push('/auth/login'));
         },
     });
 
@@ -83,7 +87,7 @@ const RegisterPage = () => {
                         </button>
                         <p className="text-sm font-dark text-gray-500">
                             {t("do_have_account")}
-                            <Link href="/auth/register" className="font-medium text-primary-600 hover:underline">
+                            <Link href="/auth/login" className="font-medium text-primary-600 hover:underline">
                                 {t("login")}
                             </Link>
                         </p>

@@ -3,16 +3,24 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LeftFrame from './components/LeftFrame';
 import RightFrame from './components/RightFrame';
+import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import { checkLogin } from '@/redux/auth/AuthSlice';
 
 const Layout = ({ children }) => {
     const dispatch = useDispatch();
 
+    const router = useRouter();
+
     useEffect(() => {
+        // don't run auth check on auth pages to avoid redirect loops
+        const pathname = router.pathname || '';
+        if (pathname.startsWith('/auth')) return;
         dispatch(checkLogin())
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [router.pathname])
+
     return (
         <>
             <Navbar />
@@ -31,6 +39,7 @@ const Layout = ({ children }) => {
                 <Footer visible={false} />
             </main >
             <Footer />
+            <ToastContainer />
         </>
     );
 };

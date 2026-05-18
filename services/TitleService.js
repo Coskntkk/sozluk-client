@@ -12,6 +12,22 @@ class TitleServiceClass {
         let res = await api.get(`/titles/${slug}?${queryStr}`);
         return res
     };
+
+    async searchTitleBySlug(slug) {
+        let res = await api.get(`/titles/search?slug=${slug}`);
+        return res
+    }
+
+    async postEntryToTitle(titleId, message) {
+        let res = await api.post(`/titles/${titleId}/entries`, { message });
+        return res
+    };
+
+    async postEntryToNewTitle(name, message) {
+        let res = await api.post(`/titles`, { name, message });
+        return res
+    }
+
 };
 
 const TitleService = new TitleServiceClass()

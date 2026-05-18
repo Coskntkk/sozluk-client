@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import AuthService from "@/services/AuthService";
 import { errorNote, successNote } from "@/utils/ToastNotify";
-import { decodeToken, isExpired } from 'react-jwt';
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const initialState = {
   user: {},
   roleName: "",
@@ -14,19 +13,14 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userData, thunkAPI) => {
     try {
-      const resp = await axios.post(`${apiUrl}/auth/register`, {
-        ...userData
-      });
+      const resp = await AuthService.register(userData);
       if (resp.status === 200) {
-        const { x_refresh_token, x_access_token } = resp.headers
-        localStorage.setItem("token", x_access_token);
-        localStorage.setItem("reftoken", x_refresh_token);
+        successNote(resp.data.message);
         return resp.data;
-      } else {
-        return thunkAPI.rejectWithValue("auth failed");
       }
+      return thunkAPI.rejectWithValue("auth failed");
     } catch (err) {
-      errorNote(err.response.data.message);
+      errorNote(err.response?.data?.message ?? "Something went wrong");
       return thunkAPI.rejectWithValue("something went wrong");
     }
   }
@@ -36,18 +30,14 @@ export const login = createAsyncThunk(
   "auth/login",
   async (data, thunkAPI) => {
     try {
-      const resp = await axios.post(`${apiUrl}/auth/login`, data);
-      if (resp.status === 200) {
-        const { refresh_token, access_token } = resp.data
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("reftoken", refresh_token);
-        const userdata = decodeToken(access_token)
-        return userdata;
-      } else {
+      const resp = await AuthService.login(data);
+      const user = AuthService.getUserFromResponse(resp);
+      if (!user) {
         return thunkAPI.rejectWithValue("auth failed");
       }
+      return { user };
     } catch (err) {
-      errorNote(err.response.data.message);
+      errorNote(err.response?.data?.message ?? "Something went wrong");
       return thunkAPI.rejectWithValue("something went wrong");
     }
   }
@@ -55,18 +45,16 @@ export const login = createAsyncThunk(
 
 export const checkLogin = createAsyncThunk(
   "auth/checkLogin",
-  async (data, thunkAPI) => {
+  async (_data, thunkAPI) => {
     try {
-      const access_token = localStorage.getItem("token");
-      if (!access_token)
+      const resp = await AuthService.getMe();
+      const user = AuthService.getUserFromResponse(resp);
+      if (!user) {
         return thunkAPI.rejectWithValue("auth failed");
-      const userdata = decodeToken(access_token)
-      if (!userdata)
-        return thunkAPI.rejectWithValue("auth failed");
-      return userdata;
-    } catch (err) {
-      errorNote(err.response.data.message);
-      return thunkAPI.rejectWithValue("something went wrong");
+      }
+      return { user };
+    } catch {
+      return thunkAPI.rejectWithValue("auth failed");
     }
   }
 );
@@ -75,24 +63,13 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (data, thunkAPI) => {
     const { navigate } = data;
-    const access_token = localStorage.getItem("token");
-    // const refresh_token = localStorage.getItem("reftoken");
-    await axios
-      .get(`${apiUrl}/auth/logout`,
-        { headers: { ["x-access-token"]: access_token } }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.clear();
-          navigate.push("/auth/login");
-          // successNote(res.data.message);
-        }
-      })
-      .catch((err) => {
-        navigate.push("/auth/login");
-        localStorage.clear();
-        return thunkAPI.rejectWithValue("something went wrong");
-      });
+    try {
+      await AuthService.logout();
+    } catch {
+      // clear session even if logout request fails
+    } finally {
+      navigate.push("/auth/login");
+    }
   }
 );
 
@@ -102,6 +79,7 @@ const authSlice = createSlice({
   reducers: {
     clearAuth: (state) => {
       state.user = {};
+      state.isAuthenticated = false;
     },
     setUser: (state, action) => {
       state.user = action.payload;
@@ -116,7 +94,7 @@ const authSlice = createSlice({
       store.isAuthenticated = true;
       store.loading = false;
     });
-    builder.addCase(login.rejected, (store, { payload }) => {
+    builder.addCase(login.rejected, (store) => {
       store.user = {};
       store.isAuthenticated = false;
       store.loading = false;
@@ -126,12 +104,12 @@ const authSlice = createSlice({
       store.isAuthenticated = true;
       store.loading = false;
     });
-    builder.addCase(checkLogin.rejected, (store, { payload }) => {
+    builder.addCase(checkLogin.rejected, (store) => {
       store.user = {};
       store.isAuthenticated = false;
       store.loading = false;
     });
-    builder.addCase(logout.fulfilled, (store, { payload }) => {
+    builder.addCase(logout.fulfilled, (store) => {
       store.user = {};
       store.isAuthenticated = false;
       store.loading = false;

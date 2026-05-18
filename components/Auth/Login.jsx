@@ -24,7 +24,8 @@ const LoginPage = () => {
         }),
         onSubmit: values => {
             dispatch(login(values))
-                .finally(() => { router.push('/') });
+                .unwrap()
+                .then(() => router.push('/'));
         },
     });
 
