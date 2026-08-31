@@ -1,0 +1,15 @@
+services:
+  sozluk-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3000
+    container_name: sozluk-client
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
